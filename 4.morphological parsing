@@ -1,0 +1,17 @@
+import nltk
+
+def pluralize(noun):
+    rules = [
+        ('(s|ss|sh|ch|x|z)$', r'\1es'),
+        ('([^aeiou])y$', r'\1ies'),
+        ('(o)$', r'\1es'),
+        ('(.*[^s])$', r'\1s')
+    ]
+    for pattern, replacement in rules:
+        if nltk.re.search(pattern, noun):
+            return nltk.re.sub(pattern, replacement, noun)
+    return noun
+
+nouns = ["cat", "city", "baby", "potato", "box"]
+for noun in nouns:
+    print(f"{noun} => {pluralize(noun)}")
