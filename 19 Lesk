@@ -1,0 +1,28 @@
+import nltk
+nltk.download('wordnet')       
+nltk.download('punkt')         
+nltk.download('omw-1.4')       
+from nltk.corpus import wordnet as wn
+from nltk.tokenize import word_tokenize
+def lesk(text, ambiguous_word):
+    context = set(word_tokenize(text))
+    synsets = wn.synsets(ambiguous_word)
+    if not synsets:
+        return None
+    best_sense = None
+    max_overlap = 0
+    for sense in synsets:
+        meanings= set(word_tokenize(sense.definition()))
+        for example in sense.examples():
+            meanings.update(word_tokenize(example))
+        overlap = len(context.intersection(meanings))
+        if overlap > max_overlap:
+            max_overlap = overlap
+            best_sense = sense
+    return best_sense
+text1 = "The bank was flooded after the storm."
+text2 = "The bass was so loud at the concert last night."
+best_sense_bank = lesk(text1, 'bank')
+best_sense_bass = lesk(text2, 'bass')
+print(f"Best sense for 'bank': {best_sense_bank} =>{best_sense_bank.definition()}")
+print(f"Best sense for 'bass': {best_sense_bass} => {best_sense_bass.definition()}")
