@@ -1,0 +1,24 @@
+import spacy
+
+# Load the spaCy English model
+nlp = spacy.load("en_core_web_sm")
+
+# Simple dictionary of noun phrase meanings
+meanings_dict = {
+    "apple": "a fruit",
+    "car": "a vehicle",
+    "dog": "a pet animal",
+    "book": "a set of pages",
+    "phone": "a communication device"
+}
+
+# Function to extract noun phrases and meanings
+def get_noun_phrases_meanings(sentence):
+    doc = nlp(sentence)
+    return {np.text: meanings_dict.get(np.text.lower(), "Meaning not found") for np in doc.noun_chunks}
+
+# Test sentence
+sentence = "The dog chased the car, and I found a book about an apple."
+
+# Extract and display noun phrases with meanings
+print(get_noun_phrases_meanings(sentence))
