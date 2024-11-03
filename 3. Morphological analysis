@@ -1,0 +1,19 @@
+import nltk
+from nltk.tokenize import word_tokenize
+nltk.download('punkt')
+text = "Hello, Students Welcome to SSE."
+tokens = word_tokenize(text)
+print("Word Tokens:")
+print(tokens)
+stop_words = set(stopwords.words('english'))
+filtered_tokens = [word for word in tokens if word.lower() not in stop_words]
+print("\n tokens without stopwords:")
+print(filtered_tokens)
+porter = PorterStemmer()
+stemmed_words = [porter.stem(word) for word in filtered_tokens]
+print("\nStemmed Words:")
+print(stemmed_words)
+from nltk.stem import WordNetLemmatizer
+lemmatizer = WordNetLemmatizer()
+lemmatized_words = [lemmatizer.lemmatize(word) for word in filtered_tokens]
+print(lemmatized_words)
